@@ -8,7 +8,7 @@ Shader "Smkgames/Raymarcher"
 {
 	Properties
 	{
-		_Size("Size",Float) = 0
+		_Size("Size",Float) = 15
 	}
 	SubShader
 	{
