@@ -10,7 +10,7 @@ Shader "Smkgames/Raymarcher"
 	}
 	SubShader
 	{
-		// No culling or depth
+		// No culling
 		Cull Off  ZTest Always
 		Blend SrcAlpha OneMinusSrcAlpha
 Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }

@@ -7,8 +7,10 @@ Shader "Smkgames/Abstract/Tours"
 	Subshader
 	{
 
+        // No culling
+        Cull Off  ZTest Always
+        Blend SrcAlpha OneMinusSrcAlpha
 Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
-		Blend SrcAlpha OneMinusSrcAlpha
 		Pass
 		{
 			CGPROGRAM

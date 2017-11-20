@@ -6,15 +6,12 @@
 
 Shader "Smkgames/Abstract/FractalBrownianMotion"
 {
-Properties{
-    _MainTex("MainTex",2D) = "white"{}
-    
-    }
     Subshader
     {
-
+		// No culling
+		Cull Off  ZTest Always
+		Blend SrcAlpha OneMinusSrcAlpha
 Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
-        Blend SrcAlpha OneMinusSrcAlpha
         Pass
         {
             CGPROGRAM
