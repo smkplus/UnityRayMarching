@@ -1,4 +1,9 @@
-﻿
+﻿// Created by Seyed Morteza Kamaly - SMK/2017
+
+//http://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
+//http://www.iquilezles.org/www/articles/morenoise/morenoise.htm
+//https://www.shadertoy.com/view/XttSz2
+
 Shader "Smkgames/Abstract/FractalBrownianMotion"
 {
 Properties{

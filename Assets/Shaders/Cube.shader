@@ -1,6 +1,4 @@
-﻿
-
-// Created by Seyed Morteza Kamaly - SMK/2017
+﻿// Created by Seyed Morteza Kamaly - SMK/2017
 
 //http://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
 
