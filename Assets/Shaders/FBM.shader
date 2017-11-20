@@ -9,7 +9,7 @@ Shader "Smkgames/Abstract/FractalBrownianMotion"
     Subshader
     {
 		// No culling
-		Cull Off  ZTest Always
+		Cull Off
 		Blend SrcAlpha OneMinusSrcAlpha
 Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
         Pass
