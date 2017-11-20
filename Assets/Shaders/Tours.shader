@@ -1,6 +1,6 @@
 ﻿
 
-Shader "Abstract"
+Shader "Smkgames/Abstract/Tours"
 {
 	Subshader
 	{
