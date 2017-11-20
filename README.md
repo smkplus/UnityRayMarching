@@ -14,3 +14,10 @@ https://www.gamasutra.com/blogs/DavidArppe/20170405/295240/How_to_get_Stunning_G
 
 ![Example 2](https://user-images.githubusercontent.com/16706911/33009218-6a4a298e-cdeb-11e7-9fc3-b9875bced101.PNG)
 
+-----------
+
+ToDo:
+1.Help me to Texture mapping Tours in Example 2 something like this https://www.shadertoy.com/view/Xd3XDS
+2.Implementing Clouds something like this https://www.shadertoy.com/view/XslGRr
+
+
