@@ -2,8 +2,11 @@
 
 //http://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
 
-Shader "Smkgames/Abstract/Tours"
+Shader "Smkgames/Repetition2"
 {
+	Properties{
+	_Distance("Distance",Float) = 70
+	}
 	Subshader
 	{
 
@@ -23,6 +26,8 @@ Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 				float4 screen_vertex : SV_POSITION;
 				float3 world_vertex : TEXCOORD1;
 			};
+
+			float _Distance;
 						
 float repeatedBox( float3 p, float3 c, float b, float r )
 {
@@ -39,9 +44,9 @@ float hash( float n ) { return frac(sin(n)*43758.5453); }
 
 float map( float3 p)
 {                        
-   float Cubes = repeatedBox(p, float3(1.2,1.2,1.2)*40, 0.071*20, 0.031);                    
-float GridsV = repeatedGrid(p+0.05, float3(1.2,1.2,1.2)*40, 0.0271*2);                        
-  float ret = min(Cubes, GridsV);
+   float Cubes = repeatedBox(p, float3(1.2,1.2,1.2)*_Distance, 0.071*20, 0.031);                    
+float Grids = repeatedGrid(p+0.05, float3(1.2,1.2,1.2)*_Distance, 0.0271*2);                        
+  float ret = min(Cubes, Grids);
   return ret;
 }
 			
@@ -79,12 +84,12 @@ float GridsV = repeatedGrid(p+0.05, float3(1.2,1.2,1.2)*40, 0.0271*2);
 
 			float4 raymarch (float3 ro, float3 rd)
 			{
-				for (int i=0; i<500; i++)
+				for (int i=0; i<64; i++)
 				{
 					float ray = map(ro);
 					//if (distance(ro,ray*rd)>1000) break;
 					float3 golden = lerp(float3(hash(i),0,0),float3(1,hash(i),0),0.6);
-					if (ray < 0.5) return float4 (lighting(ro),1.0)*float4(golden,1); else ro+=ray*rd; 
+					if (ray < 0.7) return float4 (lighting(ro),1.0)*float4(golden,1); else ro+=ray*rd; 
 				}
 				return float4 (0.0,0.0,0.0,0.0);
 			}

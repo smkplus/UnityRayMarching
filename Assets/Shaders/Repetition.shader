@@ -2,7 +2,7 @@
 
 //http://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
 
-Shader "Smkgames/Raymarcher"
+Shader "Smkgames/Repetition"
 {
 	Properties
 	{
