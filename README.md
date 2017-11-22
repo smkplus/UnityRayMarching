@@ -39,5 +39,7 @@ ______
 
 1.Help me to Texture mapping Tours in Example 2 something like this https://www.shadertoy.com/view/Xd3XDS
 2.Implementing Clouds something like this https://www.shadertoy.com/view/XslGRr
+3.making CgInclude for Raymarching and SDF shapes function
+4.transform,rotate,scale Abstract object in unity space
 
 
