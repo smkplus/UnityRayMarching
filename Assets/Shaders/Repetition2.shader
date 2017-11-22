@@ -21,6 +21,10 @@ Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 			#pragma fragment pixel_shader
 			#pragma target 3.0
 
+		    #include "UnityCG.cginc"
+			#include "Raymarching.cginc"
+
+
 			struct custom_type
 			{
 				float4 screen_vertex : SV_POSITION;
@@ -28,6 +32,8 @@ Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 			};
 
 			float _Distance;
+
+			#define DISTANCE_FUNCTION DistanceFunction
 						
 float repeatedBox( float3 p, float3 c, float b, float r )
 {
@@ -42,7 +48,7 @@ float repeatedGrid( float3 p, float3 c, float b )
 
 float hash( float n ) { return frac(sin(n)*43758.5453); }
 
-float map( float3 p)
+float DISTANCE_FUNCTION( float3 p)
 {                        
    float Cubes = repeatedBox(p, float3(1.2,1.2,1.2)*_Distance, 0.071*20, 0.031);                    
 float Grids = repeatedGrid(p+0.05, float3(1.2,1.2,1.2)*_Distance, 0.0271*2);                        
@@ -58,7 +64,7 @@ float Grids = repeatedGrid(p+0.05, float3(1.2,1.2,1.2)*_Distance, 0.0271*2);
 				{
 					float hr = 0.01 + 0.12*float(i)/4.0;
 					float3 aopos =  nor * hr + pos;
-					float dd = map( aopos );
+					float dd = DISTANCE_FUNCTION( aopos );
 					occ += -(dd-hr)*sca;
 					sca *= 0.95;
 				}
@@ -70,7 +76,7 @@ float Grids = repeatedGrid(p+0.05, float3(1.2,1.2,1.2)*_Distance, 0.0271*2);
 				float3 x = float3 (0.001,0.00,0.00);
 				float3 y = float3 (0.00,0.001,0.00);
 				float3 z = float3 (0.00,0.00,0.001);
-				return normalize(float3(map(p+x)-map(p-x), map(p+y)-map(p-y), map(p+z)-map(p-z))); 
+				return normalize(float3(DISTANCE_FUNCTION(p+x)-DISTANCE_FUNCTION(p-x), DISTANCE_FUNCTION(p+y)-DISTANCE_FUNCTION(p-y), DISTANCE_FUNCTION(p+z)-DISTANCE_FUNCTION(p-z))); 
 			}
 			
 			float3 lighting (float3 p)
@@ -86,7 +92,7 @@ float Grids = repeatedGrid(p+0.05, float3(1.2,1.2,1.2)*_Distance, 0.0271*2);
 			{
 				for (int i=0; i<64; i++)
 				{
-					float ray = map(ro);
+					float ray = DISTANCE_FUNCTION(ro);
 					//if (distance(ro,ray*rd)>1000) break;
 					float3 golden = lerp(float3(hash(i),0,0),float3(1,hash(i),0),0.6);
 					if (ray < 0.7) return float4 (lighting(ro),1.0)*float4(golden,1); else ro+=ray*rd; 
