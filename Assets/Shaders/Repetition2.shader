@@ -22,7 +22,7 @@ Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 			#pragma target 3.0
 
 		    #include "UnityCG.cginc"
-			#include "Raymarching.cginc"
+//			#include "Raymarching.cginc"
 
 
 			struct custom_type
@@ -33,7 +33,6 @@ Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 
 			float _Distance;
 
-			#define DISTANCE_FUNCTION DistanceFunction
 						
 float repeatedBox( float3 p, float3 c, float b, float r )
 {
