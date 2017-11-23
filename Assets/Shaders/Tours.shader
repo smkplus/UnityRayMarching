@@ -1,7 +1,5 @@
 ﻿// Created by Seyed Morteza Kamaly - SMK/2017
 
-//http://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
-
 Shader "Smkgames/Abstract/Tours"
 {
 	Subshader
@@ -27,12 +25,7 @@ Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 				float4 screen_vertex : SV_POSITION;
 				float3 world_vertex : TEXCOORD1;
 			};
-						
-			float sdTorus( float3 p, float2 t )
-			{
-			float2 q = float2(length(p.xz)-t.x,p.y);
-			return length(q)-t.y;
-			}	
+			#include "Assets/CgIncludes/Shapes.cginc"	
 						
 			float DistanceFunction (float3 p)
 			{

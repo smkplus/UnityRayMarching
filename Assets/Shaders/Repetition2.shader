@@ -6,6 +6,9 @@ Shader "Smkgames/Repetition2"
 {
 	Properties{
 	_Distance("Distance",Float) = 70
+	_MinDistance("Min Distance",Float) = 0
+	[Toggle(Limit)]
+	_Limit("Limit Area",Float) = 0
 	}
 	Subshader
 	{
@@ -18,8 +21,6 @@ Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 			#pragma fragment pixel_shader
 			#pragma target 3.0
 
-		    #include "UnityCG.cginc"
-			#include "Assets/CgIncludes/Raymarching.cginc"
 
 
 			struct custom_type
@@ -33,71 +34,24 @@ Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 
 			#define DISTANCE_FUNCTION map
 
-						
-float repeatedBox( float3 p, float3 c, float b, float r )
-{
-  return length(max(abs(fmod(p,c)-0.5*c)-b,0.0))-r;
-}
+			float repeatedGrid( float3 p, float3 c, float b )
+			{
+			float3 d = abs(fmod(p,c)-0.5*c)-b;
+			return min(min(max(d.x,d.y), max(d.x,d.z)), max(d.y,d.z));
+			}
 
-float repeatedGrid( float3 p, float3 c, float b )
-{
-  float3 d = abs(fmod(p,c)-0.5*c)-b;
-  return min(min(max(d.x,d.y), max(d.x,d.z)), max(d.y,d.z));
-}
+			#include "Assets/CgIncludes/Shapes.cginc"	
+			float map( float3 p)
+			{                        
+			float Cubes = sdBox(opRep(p+0.05, float3(1.2,1.2,1.2)*_Distance),0.071*30);
+			float Grids = repeatedGrid(p+0.05, float3(1.2,1.2,1.2)*_Distance, 0.0271);                        
+			float result = min(Cubes, Grids);
+			return result;
+			}
 
-float hash( float n ) { return frac(sin(n)*43758.5453); }
-
-float map( float3 p)
-{                        
-   float Cubes = repeatedBox(p, float3(1.2,1.2,1.2)*_Distance, 0.071*20, 0.031);                    
-float Grids = repeatedGrid(p+0.05, float3(1.2,1.2,1.2)*_Distance, 0.0271*2);                        
-  float ret = min(Cubes, Grids);
-  return ret;
-}
+			#include "Assets/CgIncludes/Raymarching.cginc"
 			
-			float ambient_occlusion( float3 pos, float3 nor )
-			{
-				float occ = 0.0;
-				float sca = 1.0;
-				for( int i=0; i<5; i++ )
-				{
-					float hr = 0.01 + 0.12*float(i)/4.0;
-					float3 aopos =  nor * hr + pos;
-					float dd = map( aopos );
-					occ += -(dd-hr)*sca;
-					sca *= 0.95;
-				}
-				return clamp( 1.0 - 3.0*occ, 0.0, 1.0 );    
-			}
-						
-			float3 set_normal (float3 p)
-			{
-				float3 x = float3 (0.001,0.00,0.00);
-				float3 y = float3 (0.00,0.001,0.00);
-				float3 z = float3 (0.00,0.00,0.001);
-				return normalize(float3(map(p+x)-map(p-x), map(p+y)-map(p-y), map(p+z)-map(p-z))); 
-			}
-			
-			float3 lighting (float3 p)
-			{
-				float3 AmbientLight = float3 (0.1,0.1,0.1);
-				float3 LightDirection = normalize(float3 (4.0,10.0,-10.0));
-				float3 LightColor = float3 (1.0,1.0,1.0);
-				float3 NormalDirection = set_normal(p);
-				return (max(dot(LightDirection, NormalDirection),0.0) * LightColor + AmbientLight)*ambient_occlusion(p,NormalDirection);
-			}
 
-			float4 raymarch (float3 ro, float3 rd)
-			{
-				for (int i=0; i<64; i++)
-				{
-					float ray = map(ro);
-					//if (distance(ro,ray*rd)>1000) break;
-					float3 golden = lerp(float3(hash(i),0,0),float3(1,hash(i),0),0.6);
-					if (ray < 0.7) return float4 (lighting(ro),1.0)*float4(golden,1); else ro+=ray*rd; 
-				}
-				return float4 (0.0,0.0,0.0,0.0);
-			}
 
 			custom_type vertex_shader (float4 vertex : POSITION)
 			{

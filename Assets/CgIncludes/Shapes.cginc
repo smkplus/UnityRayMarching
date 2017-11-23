@@ -1,4 +1,6 @@
-﻿//Intro
+﻿//http://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
+
+//Intro
 //After having posted about the basics of distance functions in several places (pouet, my blog, shadertoy, private emails, etc), I thought it might make sense to put these together in centralized place. Here you will find the distance functions for basic primitives, plus the formulas for combining them together for building more complex shapes, as well as some distortion functions that you can use to shape your objects. Hopefully this will be usefull for those rendering scenes with raymarching. You can see some of the results you can get by using these techniques in the raymarching distance fields article. Lastly, this article doesn't include lighting tricks, nor marching acceleartion tricks or more advanced techniques as recursive primitives or fractals.
 
 //Lengths
@@ -226,9 +228,6 @@ float sdTorus88( float3 p, float2 t )
   return length8(q)-t.y;
 }
 
-	
-
-
 
 // distance operations
 // The d1 and d2 parameters in the following functions are the distance to the two distance fields to combine together.
@@ -267,7 +266,7 @@ float opI( float d1, float d2 )
 
 //Repetition
 
-float opRep( float3 p, float3 c )
+float3 opRep( float3 p, float3 c )
 {
     float3 q = fmod(p,c)-0.5*c;
     return q;

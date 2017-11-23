@@ -1,6 +1,9 @@
-﻿
+﻿//Raymarching CGINCLUDE
 
 #include "UnityCG.cginc"
+
+float _Limit = 0;
+float _MinDistance = 0.001;
 
 #ifndef DISTANCE_FUNCTION
 inline float _DefaultDistanceFunction(float3 pos)
@@ -52,8 +55,10 @@ float ambient_occlusion( float3 pos, float3 nor )
 				for (int i=0; i<128; i++)
 				{
 					float ray = _DistanceFunction(ro);
+					if(_Limit != 0){
 					if (distance(ro,ray*rd)>250) break;
-					if (ray < 0.001) return float4 (lighting(ro)*float3(1.0,0.0,0.0),1.0); else ro+=ray*rd; 
+					}
+					if (ray < _MinDistance) return float4 (lighting(ro)*float3(1.0,0.0,0.0),1.0); else ro+=ray*rd; 
 				}
 				return float4 (0.0,0.0,0.0,0.0);
 			}
