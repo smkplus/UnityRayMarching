@@ -32,7 +32,7 @@ Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 			float _Distance;
 
 
-			#define DISTANCE_FUNCTION map
+			#define DISTANCE_FUNCTION DistanceFunction
 
 			float repeatedGrid( float3 p, float3 c, float b )
 			{
@@ -40,8 +40,8 @@ Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 			return min(min(max(d.x,d.y), max(d.x,d.z)), max(d.y,d.z));
 			}
 
-			#include "Assets/CgIncludes/Shapes.cginc"	
-			float map( float3 p)
+			#include "Assets/Shaders/Includes/Shapes.cginc"	
+			float DistanceFunction( float3 p)
 			{                        
 			float Cubes = sdBox(opRep(p+0.05, float3(1.2,1.2,1.2)*_Distance),0.071*30);
 			float Grids = repeatedGrid(p+0.05, float3(1.2,1.2,1.2)*_Distance, 0.0271);                        
@@ -49,25 +49,8 @@ Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 			return result;
 			}
 
-			#include "Assets/CgIncludes/Raymarching.cginc"
+			#include "Assets/Shaders/Includes/Raymarching.cginc"
 			
-
-
-			custom_type vertex_shader (float4 vertex : POSITION)
-			{
-				custom_type vs;
-				vs.screen_vertex = UnityObjectToClipPos (vertex);
-				vs.world_vertex = mul (unity_ObjectToWorld, vertex);
-				return vs;
-			}
-
-			float4 pixel_shader (custom_type ps ) : SV_TARGET
-			{
-				float3 worldPosition = ps.world_vertex;
-				float3 viewDirection = normalize(ps.world_vertex - _WorldSpaceCameraPos.xyz);
-				return raymarch (worldPosition,viewDirection);
-			}
-
 			ENDCG
 
 		}

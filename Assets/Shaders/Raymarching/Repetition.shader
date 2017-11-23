@@ -20,6 +20,9 @@ Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 		#pragma fragment frag
 		
 		#include "UnityCG.cginc"
+		#include "Assets/Shaders/Includes/Shapes.cginc"
+		#include "Assets/Shaders/Includes/Math.cginc"
+		
 
 		struct v2f {
 		float4 pos : SV_POSITION;	// Clip space
@@ -35,21 +38,8 @@ Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
 float _Size;
 
 
-// Rotation Matrix
-float2x2 rotate(float a) { 
-    return float2x2( cos(a), sin(a), -sin(a), cos(a) );
-}
-fixed sdBox( fixed3 p, fixed3 b )
-{
-  fixed3 d = abs(p) - b;
-  return min(max(d.x,max(d.y,d.z)),0.0) + length(max(d,0.0));
-}
 
-fixed3 opRep( fixed3 p, fixed3 c )
-{
-    fixed3 q = fmod(p,c)-0.5*c;
-    return q;
-}
+
 
 // Function of distance.
 fixed map( fixed3 p ) {
