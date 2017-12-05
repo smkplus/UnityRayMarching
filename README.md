@@ -16,6 +16,11 @@ https://www.gamasutra.com/blogs/DavidArppe/20170405/295240/How_to_get_Stunning_G
 ![Tours](https://user-images.githubusercontent.com/16706911/33009218-6a4a298e-cdeb-11e7-9fc3-b9875bced101.PNG)
 
 Example 3:
+Voxel torus
+
+![Voxel_torus](https://user-images.githubusercontent.com/16706911/33620620-9cbd7088-d9fd-11e7-85ab-5c9bafc38f15.PNG)
+
+Example 3:
 Repetition
 ![Repetition](https://user-images.githubusercontent.com/16706911/33094643-2389cdac-cf16-11e7-8e3c-65c2a6d4b37c.jpg)
 
